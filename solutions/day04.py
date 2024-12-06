@@ -1,5 +1,4 @@
 from itertools import chain
-from collections import Counter
 
 sample = """MMMSXXMASM
 MSAMXMSMSA
@@ -70,6 +69,13 @@ len([x for x in out if x == "XMAS"])
 
 
 # p2
+from collections import Counter
+
+with open("./data/04.txt", "r") as f:
+    lines = f.read()
+
+data = [l for l in lines.split("\n")]
+
 buf = "".join(["." for _ in range(len(data[0]) + 2)])
 wide = ["." + l + "." for l in data]
 data = [buf,] + wide + [buf,]
@@ -86,9 +92,12 @@ for h in range(len(data[1])):
                     _x, _y = h + _h, v + _v
                     val = data[_x][_y]
                     surrounds.append(val)
+
         if surrounds:
             counter = Counter(surrounds)
             if counter['S'] == 2 and counter['M'] == 2:
                 out.append([h,v, surrounds])
 
-len(out)
+len([o for o in out if not o[2][0] == o[2][3]])
+
+#(1,1), (1,-1), (-1,1), (-1,-1)
